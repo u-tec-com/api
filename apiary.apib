@@ -3,7 +3,116 @@ HOST: https://api.u-tec.com/
 
 # Ultraloq API
 
-Polls is a simple API allowing consumers to view polls and vote in them.
+The Ultraloq API connects Ultraloq system to 3rd IOT platform.
+
+# Group A RESTful Service
+The Ultraloq API is a [RESTful](http://en.wikipedia.org/wiki/Representational_state_transfer) service.
+
+## Authentication
+Nearly every request to the Ultraloq API requires an OAuth bearer token.
+
+Exceptions to this rule will be documented.
+
+## Content types
+Nearly every request to the Wink API should be expressed as JSON.
+
+Nearly every response from the Wink API will be expressed as JSON.
+
+Exceptions to this rule will be documented.
+
+## HTTP verbs
+The Wink API uses HTTP verbs in pretty standard ways:
+
+- GET for retrieving information without side-effects
+- PUT for updating existing resources, with partial-update semantics supported
+- POST for creating new resources or blind upserts of existing resources
+- DELETE for destructive operations on existing resurces
+
+## Identifiers
+All objects in the Wink API can be identified by `object_type` and `object_id`. The `object_id` is a string and not globally unique, currently. That is there can be an `'object_type':'light_bulb'` and `'object_id':'abc'` and an `'object_type':'thermostat'` and `'object_id':'abc'`
+
+It is possible for the API to re-assign identifiers to resources to rebalance keys; in this case, your resource will still exist but it (and all references to it) will be updated to the new identifier.  Your application should be able to handle this case.
+
+## Creatable vs. permanent
+The term "creatable" will describe a resource which may be created and/or destroyed by the user.
+
+The term "permanent" will describe a resource which may not be directly created or deleted by a user.
+
+Note that permanent **does not imply** that the resource will always exist, just that the user may not create or destroy it.  Under no circumstances should you assume that a resource will always exist.
+
+## Mutable vs. immutable
+The term "mutable" will describe a resource or attribute which the user may modify at will, assuming the user has the necessary permissions to do so.
+
+The term "immutable" will describe a resouce or attribute which may not be modified directly by the user.
+
+Note that immutable **does not imply** that the resource or attribute will never change, just that the user may not directly change it.  Under no circumstances should you assume that a resource or attribute will always remain the same.
+
+## Error states
+The common [HTTP Response Status Codes](https://github.com/for-GET/know-your-http-well/blob/master/status-codes.md) are used.
+
+# Group OAuth
+Authentication to the API
+
+The Wink API uses [OAuth2](https://tools.ietf.org/html/rfc6749).
+
+Typically your application should use the OAuth2 authorization code grant.
+
+Note that unlike most other calls, these calls do not require (and in fact should not use) an OAuth 2.0 bearer token.
+
+## Authorization page [/oauth2/authorize?response_type=code&client_id=<client_id>&redirect_uri=<redirect_uri>&state=<state>]
+### Obtain user authorization to use your application with their Wink account [GET]
+
+Please see the OAuth2 specification for more information about the use of authorization code grant and the state parameter.
+Your application's redirect URIs should be registered with Wink for the security of the user.
+
++ Request Retrieve authorization URL
+
++ Response 200 (text/html)
+
+## Obtain access token [/oauth2/token]
+### Obtain access token from authorization code grant [POST]
+
+Please see the OAuth2 specification for more information about the use of the authorization code grant.
+
++ Request Obtain access token from redirect flow (application/json)
+
+        {
+            "client_secret": "client_secret_goes_here",
+            "grant_type": "authorization_code",
+            "code": "code_from_redirect_to_your_provided_redirect_uri"
+        }
+
++ Response 201 (application/json)
+
+        {
+            "data": {
+                "access_token": "example_access_token_like_135fhn80w35hynainrsg0q824hyn",
+                "refresh_token": "crazy_token_like_240qhn16hwrnga05euynaoeiyhw52_goes_here",
+                "token_type": "bearer"
+            }
+        }
+
+### Refresh an expired access token [POST]
+
++ Request Refresh expired access token (application/json)
+
+        {
+            "client_id": "client_id_goes_here",
+            "client_secret": "client_secret_goes_here",
+            "grant_type": "refresh_token",
+            "refresh_token": "crazy_token_like_240qhn16hwrnga05euynaoeiyhw52_goes_here"
+        }
+
++ Response 201 (application/json)
+
+        {
+            "data": {
+                "access_token": "example_access_token_like_135fhn80w35hynainrsg0q824hyn",
+                "refresh_token": "crazy_token_like_240qhn16hwrnga05euynaoeiyhw52_goes_here",
+                "token_type": "bearer"
+            }
+        }
+
 
 ## Questions Collection [/questions]
 
