@@ -14,14 +14,14 @@ Nearly every request to the Ultraloq API requires an OAuth bearer token.
 Exceptions to this rule will be documented.
 
 ## Content types
-Nearly every request to the Wink API should be expressed as JSON.
+Nearly every request to the Ultraloq API should be expressed as JSON.
 
-Nearly every response from the Wink API will be expressed as JSON.
+Nearly every response from the Ultraloq API will be expressed as JSON.
 
 Exceptions to this rule will be documented.
 
 ## HTTP verbs
-The Wink API uses HTTP verbs in pretty standard ways:
+The Ultraloq API uses HTTP verbs in pretty standard ways:
 
 - GET for retrieving information without side-effects
 - PUT for updating existing resources, with partial-update semantics supported
@@ -29,7 +29,7 @@ The Wink API uses HTTP verbs in pretty standard ways:
 - DELETE for destructive operations on existing resurces
 
 ## Identifiers
-All objects in the Wink API can be identified by `object_type` and `object_id`. The `object_id` is a string and not globally unique, currently. That is there can be an `'object_type':'light_bulb'` and `'object_id':'abc'` and an `'object_type':'thermostat'` and `'object_id':'abc'`
+All objects in the Ultraloq API can be identified by `object_type` and `object_id`. The `object_id` is a string and not globally unique, currently. That is there can be an `'object_type':'light_bulb'` and `'object_id':'abc'` and an `'object_type':'thermostat'` and `'object_id':'abc'`
 
 It is possible for the API to re-assign identifiers to resources to rebalance keys; in this case, your resource will still exist but it (and all references to it) will be updated to the new identifier.  Your application should be able to handle this case.
 
@@ -53,17 +53,17 @@ The common [HTTP Response Status Codes](https://github.com/for-GET/know-your-htt
 # Group OAuth
 Authentication to the API
 
-The Wink API uses [OAuth2](https://tools.ietf.org/html/rfc6749).
+The Ultraloq API uses [OAuth2](https://tools.ietf.org/html/rfc6749).
 
 Typically your application should use the OAuth2 authorization code grant.
 
 Note that unlike most other calls, these calls do not require (and in fact should not use) an OAuth 2.0 bearer token.
 
 ## Authorization page [/oauth2/authorize?response_type=code&client_id=<client_id>&redirect_uri=<redirect_uri>&state=<state>]
-### Obtain user authorization to use your application with their Wink account [GET]
+### Obtain user authorization to use your application with their Ultraloq account [GET]
 
 Please see the OAuth2 specification for more information about the use of authorization code grant and the state parameter.
-Your application's redirect URIs should be registered with Wink for the security of the user.
+Your application's redirect URIs should be registered with Ultraloq for the security of the user.
 
 + Request Retrieve authorization URL
 
