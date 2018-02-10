@@ -197,8 +197,11 @@ Lock device management
 
         {
             "client_secret": "client_secret_goes_here",
-            "grant_type": "authorization_code",
-            "code": "code_from_redirect_to_your_provided_redirect_uri"
+            "uuid": "mac of the lock",
+            "name": "name of the lock",
+           	"password": "admin code of the lock",
+            "image": "the image of the lock",
+            "group_id": "group id of the lock"
         }
 
 + Response 201 (application/json)
