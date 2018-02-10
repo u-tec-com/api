@@ -187,11 +187,11 @@ form of choices.
                     }
                 ]
             }
-# Group Lock Device
+# Group Device Management
 Lock device management
 
-## Add  [/locks/add]
-### Add one lock to house [GET]
+## Lock  [/device/lock]
+### Add [PUT]
 
 Add a lock to user house
 image is optional
@@ -218,22 +218,72 @@ group_id is optional
             }
         }
 
-## Edit  [/locks/update]
-### Obtain user authorization to use your application with their Ultraloq account [GET]
+### Update [POST]
 
 Please see the OAuth2 specification for more information about the use of authorization code grant and the state parameter.
 Your application's redirect URIs should be registered with Ultraloq for the security of the user.
 
-## Delete [/locks/delete/]
-### delete lock from house [GET]
+### Delete [DELETE]
 
 Tobe add description here
 
-## List [/locks/list?{group_id=a}&{lock_id=b}
-### list all the lock of the user [GET]
+### List [GET]
 
 Tobe add description here
 
-# Group Lock Group
-# Group Lock Schedule
-# Group User Shift
+## Doorbell  [/device/doorbell]
+### Add [PUT]
+### List [GET]
+### Update [POST]
+### Delete [DELETE]
+## Camera  [/device/camera]
+### Add [PUT]
+### List [GET]
+### Update [POST]
+### Delete [DELETE]
+## Sensor  [/device/sensor]
+### Add [PUT]
+### List [GET]
+### Update [POST]
+### Delete [DELETE]
+
+# Group User Management
+
+## User [/user/user]
+### Add [PUT]
+### List [GET]
+### Update [POST]
+### Delete [DELETE]
+
+## Role [/user/role]
+### Add [PUT]
+### List [GET]
+### Update [POST]
+### Delete [DELETE]
+
+## Assignment [/user/assign]
+### Add [PUT]
+### List [GET]
+### Update [POST]
+### Delete [DELETE]
+ 
+# Group Device Group
+## Basic [/device/group]
+### Add [PUT]
+### List [GET]
+### Update [POST]
+### Delete [DELETE]
+
+# Group Time Shift
+## Schedule [/schedule]
+### Add [PUT]
+### List [GET]
+### Update [POST]
+### Delete [DELETE]
+
+# Group Event
+## Notify [/notify]
+### Add [PUT]
+### List [GET]
+### Update [POST]
+### Delete [DELETE]
