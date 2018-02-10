@@ -187,10 +187,10 @@ form of choices.
                     }
                 ]
             }
-# Group Device Management
+# Group Ultraloq
 Lock device management
 
-## Lock  [/device/lock]
+## Info  [/device/lock]
 ### Add [PUT]
 
 Add a lock to user house
@@ -231,25 +231,44 @@ Tobe add description here
 
 Tobe add description here
 
-## Doorbell  [/device/doorbell]
+## Status  [/device/lock/status]
+### Lock/Unlock [PUT]
+### Normal/Lockout/Passenger [PUT]
+### Lock Status [GET]
+### Alarm Status [GET]
+### Door Status [GET]
+
+# Group UBell
+## Info  [/device/doorbell]
 ### Add [PUT]
 ### List [GET]
 ### Update [POST]
 ### Delete [DELETE]
+## Snap [/device/doorbell/snap]
+### Snap [GET]
+
+# Group UCam
 ## Camera  [/device/camera]
 ### Add [PUT]
 ### List [GET]
 ### Update [POST]
 ### Delete [DELETE]
+## Snap [/device/camera/snap]
+### Snap [GET]
+
+# Group USensor
 ## Sensor  [/device/sensor]
 ### Add [PUT]
 ### List [GET]
 ### Update [POST]
 ### Delete [DELETE]
+## Status  [/device/sensor/status]
+### Alarm Out [PUT]
+### Status [GET]
 
 # Group User Management
 
-## User [/user/user]
+## Info [/user/user]
 ### Add [PUT]
 ### List [GET]
 ### Update [POST]
@@ -267,13 +286,6 @@ Tobe add description here
 ### Update [POST]
 ### Delete [DELETE]
  
-# Group Device Group
-## Basic [/device/group]
-### Add [PUT]
-### List [GET]
-### Update [POST]
-### Delete [DELETE]
-
 # Group Time Shift
 ## Schedule [/schedule]
 ### Add [PUT]
@@ -287,3 +299,21 @@ Tobe add description here
 ### List [GET]
 ### Update [POST]
 ### Delete [DELETE]
+
+# Group Device Group
+## Basic [/device/group]
+### Add [PUT]
+### List [GET]
+### Update [POST]
+### Delete [DELETE]
+
+## Schedule [/device/group/schedule]
+
+All devices in this group shoud do some action in scheduled time
+### Add [PUT]
+### List [GET]
+### Update [POST]
+### Delete [DELETE]
+
+## Alarm on/off
+All devices in this group shoud alarm on/off in scheduled time
