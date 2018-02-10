@@ -193,7 +193,23 @@ Lock device management
 ## Add  [/locks/add]
 ### Add one lock to house [GET]
 
-Tobe add description here
++ Request Obtain access token from redirect flow (application/json)
+
+        {
+            "client_secret": "client_secret_goes_here",
+            "grant_type": "authorization_code",
+            "code": "code_from_redirect_to_your_provided_redirect_uri"
+        }
+
++ Response 201 (application/json)
+
+        {
+            "data": {
+                "access_token": "example_access_token_like_135fhn80w35hynainrsg0q824hyn",
+                "refresh_token": "crazy_token_like_240qhn16hwrnga05euynaoeiyhw52_goes_here",
+                "token_type": "bearer"
+            }
+        }
 
 ## Edit  [/locks/update]
 ### Obtain user authorization to use your application with their Ultraloq account [GET]
@@ -201,7 +217,7 @@ Tobe add description here
 Please see the OAuth2 specification for more information about the use of authorization code grant and the state parameter.
 Your application's redirect URIs should be registered with Ultraloq for the security of the user.
 
-## Delete [/locks/delete]
+## Delete [/locks/delete/]
 ### delete lock from house [GET]
 
 Tobe add description here
