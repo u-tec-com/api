@@ -216,7 +216,7 @@ Get all locks of current user
             },
         ]
 
-### Create a new lock [POST]
+### Add a new lock [POST]
 
 Add a lock to user house
 image is optional
@@ -224,23 +224,43 @@ group_id is optional
 
 + Request (application/json)
 
-    {
-        "uuid": "aa:bb:cc:dd:ee:ff",
-        "name": "Front door",
-        "model": "UL1",
-        "uid":12345,
-        "password":778833,
-        "photo": "xx",
-        "version":"V0101.1001",
-        "version_bt":"V0101.1002",
-        "version_other":"V0101.1003",
-     }
+        {
+            "uuid": "aa:bb:cc:dd:ee:ff",
+            "name": "Front door",
+            "model": "UL1",
+            "uid":12345,        //id of administrator
+            "password":778833,  
+            "photo": "BASE64_OF_IMAGE_DATA",
+            "version":"V0101.1001",
+            "version_bt":"V0101.1002",
+            "version_other":"V0101.1003",
+        }
 
 + Response 200 (application/json)
-    {
-    }
 
-## Lock [/device/lock/lock_id]
+        {
+        }
+
+## Lock check [/device/lock/is_shared]
+
+### May I add the lock [GET]
+
+Check the lock is added by others
+
++ Request (application/json)
+
+        {
+            "uuid": "aa:bb:cc:dd:ee:ff",
+        }
+
++ Response 200 (application/json)
+
+        {
+            "bind": 1,
+            "users": "EMAIL_OF_THE_USER"
+        }
+
+## Lock [/device/lock/lock_uuid]
 
 ### Get a lock [GET]
 
@@ -272,15 +292,16 @@ Update the lock information
 
 + Request (application/json)
 
-    {
-        "uuid": "aa:bb:cc:dd:ee:ff",
-        "name": "Front door",
-        "photo": "BASE64_OF_IMAGE",
-    }
+        {
+            "uuid": "aa:bb:cc:dd:ee:ff",
+            "name": "Front door",
+            "photo": "BASE64_OF_IMAGE",
+        }
 
 + Response 200 (application/json)
-    {
-    }
+
+        {
+        }
 
 
 ### Delete a lock [DELETE]
@@ -289,35 +310,272 @@ Delete a lock from user lock list
 
 + Request (application/json)
 
-    {
-        "uuid": "aa:bb:cc:dd:ee:ff",
-    }
+        {
+            "uuid": "aa:bb:cc:dd:ee:ff",
+        }
 
 + Response 200 (application/json)
-    {
-    }
+
+        {
+        }
 
 
-## Actions  [/device/lock/action]
-### Lock/Unlock [PUT]
-### Normal/Lockout/Passenger [PUT]
+## unLock  [/device/lock/unlock]
+### Unlock a lock [POST]
+
++ Request (application/json)
+
+        {
+            "uuid": "aa:bb:cc:dd:ee:ff",
+        }
+
++ Response 200 (application/json)
+
+        {
+        }
+
+
+## Work mode  [/device/lock/mode]
+### Normal/Lockout/Passenger [POST]
+
++ Request (application/json)
+
+        {
+            "uuid": "aa:bb:cc:dd:ee:ff",
+            "mode": "Normal"
+        }
+
++ Response 200 (application/json)
+
+        {
+        }
+
 
 ## Status  [/device/lock/status]
-### Lock Status [GET]
-### Alarm Status [GET]
-### Door Status [GET]
 
-## User Assignment [/device/lock/users]
-### Add [PUT]
-### List [GET]
+### Get lock current status [GET]
+
++ Request (application/json)
+
+        {
+            "uuid": "aa:bb:cc:dd:ee:ff",
+        }
+
++ Response 200 (application/json)
+
+        {
+            "date": 153477,    //current ts of lock
+            "is_lock": 1,   //is locked
+            "mode": "Normal",
+            "battery": "full",
+            "is_alarmed": 1,
+            "is_online": 1,
+        }
+
+## Lock Users [/device/lock/users]
+### Get all users of this lock [GET]
+
++ Request (application/json)
+
+        {
+            "uuid": "aa:bb:cc:dd:ee:ff",
+        }
+        
++ Response 200 (application/json)
+
+        [
+            {
+                "uuid": "aa:bb:cc:dd:ee:ff",
+                "uid": 778833,
+                "name": "alice",
+                "photo": "BASE64_OF_USER_IMAGE",
+                "type": 1,          //0-general user, 1-administrator
+                "ptype":1,  //1:finger 2：pin code 4：rfid card 8：app 16: remote
+                "Password_number": 1,
+                "Finger_number": 1,
+                "Card_number": 1,
+                "Email": "alice@u-tec.com".
+                "Is_share": 0,
+                "Share_status": 1,
+                "Share_type": 0,
+                "Share_start_date": "2018-1-1 10:10:00",
+                "Share_end_date": "2018-2-1 10:10:00",
+                "Share_week": "1,3,5,7",
+                "Share_start_time": "8:00:00",
+                "Share_end_time": "10:00:00",
+                "Share_times": 5,
+                "Share_times_used": 3
+            }
+        ]
+        
+        
+### Add [POST]
+
++ Request (application/json)
+
+        {
+            "uuid": "aa:bb:cc:dd:ee:ff",
+            "uid": 778833,
+            "name": "alice",
+            "photo": "BASE64_OF_USER_IMAGE",
+            "type": 1,          //0-general user, 1-administrator
+            "status": 1,        //1-normal, 0-disable
+            "finger":  "FINGER_DATA",       //1-has finger, 0-no finger
+            "password": "778833"
+            "cardid":   "882244"
+        }
+
++ Response 200 (application/json)
+
+        {
+            "date": 153477,    //current ts of lock
+            "is_lock": 1,   //is locked
+            "mode": "Normal",
+            "battery": "full",
+            "is_alarmed": 1,
+            "is_online": 1,
+        }
+
+
+## Lock User [/device/lock/user/user_id]
+
+### Get a lock User Info [GET]
+
++ Request (application/json)
+
+        {
+            "uuid": "aa:bb:cc:dd:ee:ff",
+        }
+        
++ Response 200 (application/json)
+
+        {
+            "uuid": "aa:bb:cc:dd:ee:ff",
+            "uid": 778833,
+            "name": "alice",
+            "photo": "BASE64_OF_USER_IMAGE",
+            "type": 1,          //0-general user, 1-administrator
+            "ptype":1,  //1:finger 2：pin code 4：rfid card 8：app 16: remote
+            "Password_number": 1,
+            "Finger_number": 1,
+            "Card_number": 1,
+            "Email": "alice@u-tec.com".
+            "Is_share": 0,
+            "Share_status": 1,
+            "Share_type": 0,
+            "Share_start_date": "2018-1-1 10:10:00",
+            "Share_end_date": "2018-2-1 10:10:00",
+            "Share_week": "1,3,5,7",
+            "Share_start_time": "8:00:00",
+            "Share_end_time": "10:00:00",
+            "Share_times": 5,
+            "Share_times_used": 3
+        }
+        
+    
 ### Update [PUT]
+
++ Request (application/json)
+
+        {
+            "uuid": "aa:bb:cc:dd:ee:ff",
+            "uid": 778833,
+            "name": "alice",
+            "photo": "BASE64_OF_USER_IMAGE",
+            "type": 1,          //0-general user, 1-administrator
+            "status": 1,        //1-normal, 0-disable
+        }
+        
++ Response 200 (application/json)
+
+        {
+        }
+        
 ### Delete [DELETE]
 
-## User Ids [/device/lock/user/ids]
-### Add [PUT]
-### List [GET]
++ Request (application/json)
+
+        {
+            "uuid": "aa:bb:cc:dd:ee:ff",
+            "uid": 778833,
+        }
+        
++ Response 200 (application/json)
+
+        {
+        }
+                
+
+## Lock User ids [/device/lock/user-ids]
+### Add an id [POST]
+
++ Request (application/json)
+
+        {
+            "uuid": "aa:bb:cc:dd:ee:ff",
+            "uid": 778833,
+            "password": "123456",
+            "finger": "BASE64_OF_FINGER_PRINTER",       //optional
+            "card": "123456",       //optional
+       }
+        
++ Response 200 (application/json)
+
+        {
+        }
+
+### Get ids [GET]
+
++ Request (application/json)
+
+        {
+            "uuid": "aa:bb:cc:dd:ee:ff",
+            "uid": 778833,
+        }
+        
++ Response 200 (application/json)
+
+        {
+            "password": "123456",
+            "finger": "BASE64_OF_FINGER_PRINTER",
+            "card": "123456",
+        }
+
+
 ### Update [PUT]
+
++ Request (application/json)
+
+        {
+            "uuid": "aa:bb:cc:dd:ee:ff",
+            "uid": 778833,
+            "password": "123456",
+            "finger": "BASE64_OF_FINGER_PRINTER",       //optional
+            "card": "123456",       //optional
+        }
+        
++ Response 200 (application/json)
+
+        {
+        }
+
+
 ### Delete [DELETE]
+
++ Request (application/json)
+
+        {
+            "uuid": "aa:bb:cc:dd:ee:ff",
+            "uid": 778833,
+            "ptype":1,  //1:finger 2：pin code 4：rfid card 
+         }
+        
++ Response 200 (application/json)
+
+        {
+           
+        }
+
 
 ## User Shift [/device/lock/user/shift]
 ### Add [PUT]
