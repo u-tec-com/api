@@ -1,4 +1,4 @@
-FORMAT: 1A
+-FORMAT: 1A
 HOST: https://api.u-tec.com/
 
 # Ultraloq API
@@ -190,8 +190,33 @@ form of choices.
 # Group Ultraloq
 Lock device management
 
-## Info  [/device/lock]
-### Add [PUT]
+## Locks  [/device/locks]
+### Get all locks [GET]
+
+Get all locks of current user
+
++ Response 200 (application/json)
+
+        [
+            {
+                "uuid": "aa:bb:cc:dd:ee:ff",
+                "name": "Front door",
+                "model": "UL1",
+                "type": "1001",
+                "photo": "xx",
+                "status":1,
+                "params":
+                {
+                    "uid":12345,
+                    "password":778833,
+                    "ptype":1,
+                    "bridge_uuid":"aa:bb:cc:dd:ee:ff",
+                    "bridge_status":0
+                }
+            },
+        ]
+
+### Create a new lock [POST]
 
 Add a lock to user house
 image is optional
@@ -199,37 +224,79 @@ group_id is optional
 
 + Request (application/json)
 
+    {
+        "uuid": "aa:bb:cc:dd:ee:ff",
+        "name": "Front door",
+        "model": "UL1",
+        "uid":12345,
+        "password":778833,
+        "photo": "xx",
+        "version":"V0101.1001",
+        "version_bt":"V0101.1002",
+        "version_other":"V0101.1003",
+     }
+
++ Response 200 (application/json)
+    {
+    }
+
+## Lock [/device/lock/lock_id]
+
+### Get a lock [GET]
+
+Get the lock of this user
+
++ Response 200 (application/json)
+
         {
-            "client_secret": "client_secret_goes_here",
-            "uuid": "mac of the lock",
-            "name": "name of the lock",
-            "password": "admin code of the lock",
-            "image": "the image of the lock",
-            "group_id": "group id of the lock"
+            "uuid": "aa:bb:cc:dd:ee:ff",
+            "name": "Front door",
+            "model": "UL1",
+            "type": "1001",
+            "photo": "xx",
+            "status":1,
+            "params":
+                {
+                    "uid":12345,
+                    "password":778833,
+                    "ptype":1,
+                    "bridge_uuid":"aa:bb:cc:dd:ee:ff",
+                    "bridge_status":0
+                }
         }
 
-+ Response 201 (application/json)
 
-        {
-            "data": {
-                "access_token": "example_access_token_like_135fhn80w35hynainrsg0q824hyn",
-                "refresh_token": "crazy_token_like_240qhn16hwrnga05euynaoeiyhw52_goes_here",
-                "token_type": "bearer"
-            }
-        }
 
-### Update [POST]
+### Update a lock [PUT]
+Update the lock information
 
-Please see the OAuth2 specification for more information about the use of authorization code grant and the state parameter.
-Your application's redirect URIs should be registered with Ultraloq for the security of the user.
++ Request (application/json)
 
-### Delete [DELETE]
+    {
+        "uuid": "aa:bb:cc:dd:ee:ff",
+        "name": "Front door",
+        "photo": "BASE64_OF_IMAGE",
+    }
 
-Tobe add description here
++ Response 200 (application/json)
+    {
+    }
 
-### List [GET]
 
-Tobe add description here
+### Delete a lock [DELETE]
+
+Delete a lock from user lock list
+
++ Request (application/json)
+
+    {
+        "uuid": "aa:bb:cc:dd:ee:ff",
+    }
+
++ Response 200 (application/json)
+    {
+    }
+
 
 ## Actions  [/device/lock/action]
 ### Lock/Unlock [PUT]
