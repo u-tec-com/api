@@ -568,7 +568,7 @@ Delete a lock from user lock list
             "uuid": "aa:bb:cc:dd:ee:ff",
             "uid": 778833,
             "ptype":1,  //1:finger 2：pin code 4：rfid card 
-         }
+        }
         
 + Response 200 (application/json)
 
@@ -577,11 +577,105 @@ Delete a lock from user lock list
         }
 
 
-## User Shift [/device/lock/user/shift]
-### Add [PUT]
-### List [GET]
+## User Shifts [/device/lock/user-shifts]
+### Get all shifts of user [GET]
+
+Get lock user shifts
+
++ Request (application/json)
+
+        {
+            "uuid": "aa:bb:cc:dd:ee:ff",
+            "uid": 778833
+        }
+        
++ Response 200 (application/json)
+
+        [
+            {
+                "shift_id":33455,
+                "shift_type":"time_limited",
+                "start_time": "8:00:00",
+                "end_time": "10:00:00",
+            },
+            {
+                "shift_id":33456,
+                "shift_type":"count_limited",
+                "limited": 5,
+                "used": 3,
+            },
+            {
+                "shift_id":33457,
+                "shift_type":"date_limited",
+                "start_date": "2018-01-10 8:00:00",
+                "end_date": "2018-02-10 8:00:00",
+            },
+            
+        ]
+
+
+### Add a shift [PUT]
+Add a shift to lock user
+
++ Request (application/json)
+
+        {
+            "uuid": "aa:bb:cc:dd:ee:ff",
+            "uid": 778833
+        }
+        
++ Response 200 (application/json)
+
+        [
+            {
+                "shift_type":"time_limited",
+                "start_time": "8:00:00",
+                "end_time": "10:00:00",
+            },
+            {
+                "shift_type":"count_limited",
+                "limited": 5,
+                "used": 3,
+            },
+            {
+                "shift_type":"date_limited",
+                "start_date": "2018-01-10 8:00:00",
+                "end_date": "2018-02-10 8:00:00",
+            },
+            
+        ]
+
+
+## User Shift [/device/lock/user-shift/shift_id]
+
 ### Update [PUT]
+
++ Request (application/json)
+
+        {
+            "start_time": "8:00:00",
+            "end_time": "10:00:00",
+        },
+        
++ Response 200 (application/json)
+
+        {
+        }
+
+
 ### Delete [DELETE]
+
++ Request (application/json)
+
+        {
+            "uuid": "aa:bb:cc:dd:ee:ff",
+            "uid": 778833
+        }
+        
++ Response 200 (application/json)
+
+        {
+        }
 
 ## Schedule [/device/schedule]
 All locks in this group shoud do some action in scheduled time
